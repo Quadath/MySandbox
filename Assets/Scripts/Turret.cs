@@ -1,18 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Transform target;
+    private Transform tower;
+
+    private float rotSpeed = 1;
+
+
+    private void Start()
     {
-        
+        tower = transform.GetChild(1);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetTarget(Transform tr)
     {
-        
+        if (target) return;
+        target = tr;
+    }
+
+    private void Update()
+    {
+        if (target)
+        {
+            Vector3 vectorToTarget = target.transform.position - transform.position;
+            float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+            tower.rotation = Quaternion.RotateTowards(tower.rotation, q, 70f * rotSpeed *Time.deltaTime);
+        }
     }
 }
