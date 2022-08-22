@@ -18,7 +18,6 @@ public class Turret : MonoBehaviour
 
     public void SetTarget(Transform tr)
     {
-        if (target) return;
         target = tr;
     }
 
