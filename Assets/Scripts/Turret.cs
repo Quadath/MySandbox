@@ -25,10 +25,16 @@ public class Turret : MonoBehaviour
     {
         if (target)
         {
-            Vector3 vectorToTarget = target.transform.position - transform.position;
-            float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            tower.rotation = Quaternion.RotateTowards(tower.rotation, q, 70f * rotSpeed *Time.deltaTime);
+            var position = transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(position, target.transform.position - position);
+            if (hit.transform == target)
+            {
+                Vector3 vectorToTarget = target.transform.position - position;
+                float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+                tower.rotation = Quaternion.RotateTowards(tower.rotation, q, 70f * rotSpeed *Time.deltaTime);
+            } 
+
         }
     }
 }

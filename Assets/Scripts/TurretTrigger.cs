@@ -8,6 +8,7 @@ public class TurretTrigger : MonoBehaviour
     private Turret turr;
     private List<Transform> enemies = new List<Transform>();
     private float range = 3;
+    public Transform tower;
 
     private void Start()
     {
@@ -23,7 +24,14 @@ public class TurretTrigger : MonoBehaviour
             for(int index = 0; index < enemies.Count; index ++)
             {
                 var enemy = enemies[index];
-                var dist = Vector2.Distance(transform.position, enemy.position);
+                var position = transform.position;
+                var dist = Vector2.Distance(position, enemy.position);
+                
+                RaycastHit2D hit = Physics2D.Raycast(position, enemy.position - position);
+                
+                if(hit.transform != enemy)
+                    continue;
+
                 if (dist < smallestDist)
                 {
                     smallestDist = dist;
@@ -32,7 +40,6 @@ public class TurretTrigger : MonoBehaviour
                 if (dist > (range + .25f))
                 {
                     enemies.Remove(enemy);
-                    Debug.Log("Removed");
                 }
             }
             if (closestEnemy != null)
@@ -50,7 +57,6 @@ public class TurretTrigger : MonoBehaviour
             if (!enemies.Contains(other.transform))
             {
                 enemies.Add(other.transform);
-                Debug.Log("Added");
             }
             else
             {
