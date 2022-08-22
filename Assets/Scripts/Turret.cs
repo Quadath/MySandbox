@@ -5,15 +5,22 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    private Transform target;
     private Transform tower;
+    private Transform shoot;
+    private Transform target;
 
     private float rotSpeed = 1;
+    private float shootSpeed = 0.7f;
+
+    private float shootCooldown = 0;
+
+    public GameObject Bullet;
 
 
     private void Start()
     {
         tower = transform.GetChild(1);
+        shoot = tower.GetChild(1);
     }
 
     public void SetTarget(Transform tr)
@@ -32,9 +39,25 @@ public class Turret : MonoBehaviour
                 Vector3 vectorToTarget = target.transform.position - position;
                 float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
                 Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-                tower.rotation = Quaternion.RotateTowards(tower.rotation, q, 70f * rotSpeed *Time.deltaTime);
-            } 
+                tower.rotation = Quaternion.RotateTowards(tower.rotation, q, 70f * rotSpeed * Time.deltaTime);
+                
+                RaycastHit2D hitForward = Physics2D.Raycast(position, tower.transform.right);
+                if (hitForward.transform == target)
+                {
+                    Shoot();
+                }
+            }
+        }
 
+        shootCooldown -= Time.deltaTime;
+    }
+
+    void Shoot()
+    {
+        if (shootCooldown <= 0)
+        {
+            Instantiate(Bullet, shoot.position, tower.rotation);
+            shootCooldown = 1 / shootSpeed;
         }
     }
 }
