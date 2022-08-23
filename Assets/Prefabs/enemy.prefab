@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 5544372756130650563}
   - component: {fileID: 5544372756130650560}
   - component: {fileID: 5544372756130650561}
+  - component: {fileID: 6076949630080264148}
   - component: {fileID: 5544372756130650574}
   m_Layer: 0
   m_Name: enemy
@@ -318,7 +319,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  clone: {fileID: 0}
+--- !u!114 &6076949630080264148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544372756130650562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc7853cd38cd13478ead5763548451c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seeker: {fileID: 0}
+  target: {fileID: 0}
+  GridOwner: {fileID: 0}
 --- !u!50 &5544372756130650574
 Rigidbody2D:
   serializedVersion: 4

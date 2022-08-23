@@ -21,7 +21,7 @@ public class TurretTrigger : MonoBehaviour
         Transform closestEnemy = null;
         if (enemies.Count > 0)
         {
-            for(int index = 0; index < enemies.Count; index ++)
+            for(int index = 0; index < enemies.Count; index++)
             {
                 var enemy = enemies[index];
                 var position = transform.position;
@@ -32,14 +32,14 @@ public class TurretTrigger : MonoBehaviour
                 if(hit.transform != enemy)
                     continue;
 
-                if (dist < smallestDist)
-                {
-                    smallestDist = dist;
-                    closestEnemy = enemy;
-                }
                 if (dist > (range + .25f))
                 {
                     enemies.Remove(enemy);
+                }
+                else if (dist < smallestDist)
+                {
+                    smallestDist = dist;
+                    closestEnemy = enemy;
                 }
             }
             if (closestEnemy != null)
