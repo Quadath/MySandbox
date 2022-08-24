@@ -102,7 +102,7 @@ public class Grid2D : MonoBehaviour
 
         return neighbors;
     }
-
+        
     public void SetBlock(Vector3Int v, GameObject tile)
     {
         if (!HasTile(v))
@@ -112,6 +112,19 @@ public class Grid2D : MonoBehaviour
         }
     }
 
+    public void DestroyBlock(Vector3 worldPosition)
+    {
+        var v = V3toV3I(worldPosition);
+        tiles[v.x, v.y] = null;
+        Grid[v.x, v.y].SetObstacle(false);
+    }
+
+    public GameObject ObjectFromWorldPoint(Vector3 worldPosition)
+    {
+        int x = Mathf.RoundToInt(worldPosition.x);
+        int y = Mathf.RoundToInt(worldPosition.y);
+        return tiles[x, y];
+    }
     public Node2D NodeFromWorldPoint(Vector3 worldPosition)
     {
         int x = Mathf.RoundToInt(worldPosition.x);
@@ -137,23 +150,28 @@ public class Grid2D : MonoBehaviour
     }
 
     //Draws visual representation of grid
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
-    //
-    //     if (Grid != null)
-    //     {
-    //         foreach (Node2D n in Grid)
-    //         {
-    //             if (n.obstacle)
-    //                 Gizmos.color = Color.red;
-    //             else
-    //                 Gizmos.color = Color.white;
-    //
-    //             if (path != null && path.Contains(n))
-    //                 Gizmos.color = Color.black;
-    //             Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeRadius));
-    //         }
-    //     }
-    // }
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
+    
+        if (Grid != null)
+        {
+            foreach (Node2D n in Grid)
+            {
+                if (n.obstacle)
+                    Gizmos.color = Color.red;
+                else
+                    Gizmos.color = Color.white;
+    
+                if (path != null && path.Contains(n))
+                    Gizmos.color = Color.black;
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeRadius));
+            }
+        }
+    }
+
+    private static Vector3Int V3toV3I(Vector3 v)
+    {
+        return new Vector3Int((int) v.x, (int) v.y, (int) v.z);
+    }
 }

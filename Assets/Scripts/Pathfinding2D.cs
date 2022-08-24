@@ -7,13 +7,13 @@ public class Pathfinding2D : MonoBehaviour
 
     public Transform seeker, target;
     Grid2D grid;
-    Node2D seekerNode, targetNode;
+    private Node2D seekerNode, targetNode;
     public GameObject GridOwner;
     public List<Node2D> path;
 
 
 
-    void Start()
+    void Awake()
     {
         //Instantiate grid
         grid = GridOwner.GetComponent<Grid2D>();
@@ -57,12 +57,20 @@ public class Pathfinding2D : MonoBehaviour
             //adds neighbor nodes to openSet
             foreach (Node2D neighbour in grid.GetNeighbors(node))
             {
-                if (neighbour.obstacle || closedSet.Contains(neighbour))
+                if (closedSet.Contains(neighbour))
                 {
                     continue;
                 }
 
-                int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
+                int newCostToNeighbour = 0;
+                if (!neighbour.obstacle)
+                {
+                   newCostToNeighbour  = node.gCost + GetDistance(node, neighbour);
+                }
+                else
+                {
+                    newCostToNeighbour  = node.gCost + GetDistance(node, neighbour) + 2000;
+                }
                 if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                 {
                     neighbour.gCost = newCostToNeighbour;
@@ -104,12 +112,4 @@ public class Pathfinding2D : MonoBehaviour
         return 14 * dstX + 10 * (dstY - dstX);
     }
     
-    void OnDrawGizmos()
-    {
-            foreach (Node2D n in path)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (0.5f));
-            }
-    }
 }
