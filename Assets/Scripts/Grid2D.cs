@@ -103,10 +103,18 @@ public class Grid2D : MonoBehaviour
         return neighbors;
     }
 
+    public void SetBlock(Vector3Int v, GameObject tile)
+    {
+        if (!HasTile(v))
+        {
+            tiles[v.x, v.y] = Instantiate(tile, v, Quaternion.identity);
+            Grid[v.x, v.y].SetObstacle(true);
+        }
+    }
 
     public Node2D NodeFromWorldPoint(Vector3 worldPosition)
     {
-        int x = Mathf.RoundToInt(worldPosition.x - 1);
+        int x = Mathf.RoundToInt(worldPosition.x);
         int y = Mathf.RoundToInt(worldPosition.y);
         return Grid[x, y];
     }
@@ -129,23 +137,23 @@ public class Grid2D : MonoBehaviour
     }
 
     //Draws visual representation of grid
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
-
-        if (Grid != null)
-        {
-            foreach (Node2D n in Grid)
-            {
-                if (n.obstacle)
-                    Gizmos.color = Color.red;
-                else
-                    Gizmos.color = Color.white;
-
-                if (path != null && path.Contains(n))
-                    Gizmos.color = Color.black;
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeRadius));
-            }
-        }
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
+    //
+    //     if (Grid != null)
+    //     {
+    //         foreach (Node2D n in Grid)
+    //         {
+    //             if (n.obstacle)
+    //                 Gizmos.color = Color.red;
+    //             else
+    //                 Gizmos.color = Color.white;
+    //
+    //             if (path != null && path.Contains(n))
+    //                 Gizmos.color = Color.black;
+    //             Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeRadius));
+    //         }
+    //     }
+    // }
 }

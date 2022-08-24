@@ -9,6 +9,8 @@ public class Pathfinding2D : MonoBehaviour
     Grid2D grid;
     Node2D seekerNode, targetNode;
     public GameObject GridOwner;
+    public List<Node2D> path;
+
 
 
     void Start()
@@ -77,18 +79,18 @@ public class Pathfinding2D : MonoBehaviour
     //reverses calculated path so first node is closest to seeker
     void RetracePath(Node2D startNode, Node2D endNode)
     {
-        List<Node2D> path = new List<Node2D>();
+        List<Node2D> _path = new List<Node2D>();
         Node2D currentNode = endNode;
 
         while (currentNode != startNode)
         {
-            path.Add(currentNode);
+            _path.Add(currentNode);
             currentNode = currentNode.parent;
         }
-        path.Reverse();
+        _path.Reverse();
 
-        grid.path = path;
-
+        grid.path = _path;
+        path = _path;
     }
 
     //gets distance between 2 nodes for calculating cost
@@ -100,5 +102,14 @@ public class Pathfinding2D : MonoBehaviour
         if (dstX > dstY)
             return 14 * dstY + 10 * (dstX - dstY);
         return 14 * dstX + 10 * (dstY - dstX);
+    }
+    
+    void OnDrawGizmos()
+    {
+            foreach (Node2D n in path)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (0.5f));
+            }
     }
 }
