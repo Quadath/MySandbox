@@ -11,7 +11,7 @@ public class PlaceBlock : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             var vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            grid.SetBlock(new Vector3Int((int) vect.x, (int) vect.y, 0), tile);
+            grid.SetBlock(new Vector3Int((int) (vect.x + .5f), (int) (vect.y + .5f), 0), tile);
         }
     }
 }

@@ -12,7 +12,10 @@ public class Bullet : MonoBehaviour
   {
     rb = GetComponent<Rigidbody2D>();
     rb.AddForce(transform.right * speed * 100);
-
   }
 
+  public void OnCollisionEnter2D(Collision2D other)
+  {
+    Destroy(gameObject);
+  }
 }

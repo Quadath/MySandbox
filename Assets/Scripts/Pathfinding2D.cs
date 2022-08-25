@@ -62,19 +62,12 @@ public class Pathfinding2D : MonoBehaviour
                     continue;
                 }
 
-                int newCostToNeighbour = 0;
-                if (!neighbour.obstacle)
-                {
-                   newCostToNeighbour  = node.gCost + GetDistance(node, neighbour);
-                }
-                else
-                {
-                    newCostToNeighbour  = node.gCost + GetDistance(node, neighbour) + 2000;
-                }
+                int newCostToNeighbour =  node.gCost + GetDistance(node, neighbour) + (neighbour.obstacle ? 100 : 0);
+              
                 if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                 {
                     neighbour.gCost = newCostToNeighbour;
-                    neighbour.hCost = GetDistance(neighbour, targetNode);
+                    neighbour.hCost = GetDistance(neighbour, targetNode) + (neighbour.obstacle ? 100 : 0);
                     neighbour.parent = node;
 
                     if (!openSet.Contains(neighbour))

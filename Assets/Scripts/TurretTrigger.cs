@@ -58,9 +58,5 @@ public class TurretTrigger : MonoBehaviour
             {
                 enemies.Add(other.transform);
             }
-            else
-            {
-                Debug.LogError("Enemies contains " + other);
-            }
     }
 }
