@@ -24,6 +24,11 @@ public class TurretTrigger : MonoBehaviour
             for(int index = 0; index < enemies.Count; index++)
             {
                 var enemy = enemies[index];
+                if (!enemy)
+                {
+                    enemies.RemoveAt(index);
+                    continue;
+                }
                 var position = transform.position;
                 var dist = Vector2.Distance(position, enemy.position);
                 
