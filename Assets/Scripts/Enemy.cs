@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
     public Node2D target;
     public Pathfinding2D ptf;
-    public Transform finish;
+    public Transform player;
     public List<Node2D> path => ptf.path;
 
     private Grid2D gr;
@@ -17,13 +18,14 @@ public class Enemy : MonoBehaviour
     {
         ptf = GetComponent<Pathfinding2D>();
         gr = FindObjectOfType<Grid2D>();
-        ptf.FindPath(transform.position, finish.position);
+        player = FindObjectOfType<Player>().transform;
+        ptf.FindPath(transform.position, player.position);
         target = path[1];
     }
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, finish.position) > 1)
+        if (Vector3.Distance(transform.position, player.position) > 1)
         {
             if (transform.position != target.worldPosition)
             {
@@ -37,13 +39,13 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    ptf.FindPath(transform.position, finish.position);
+                    ptf.FindPath(transform.position, player.position);
                     target = ptf.path[0];
                 }
             }
             else
             {
-                ptf.FindPath(transform.position, finish.position);
+                ptf.FindPath(transform.position, player.position);
                 target = ptf.path[0];
             }
         }

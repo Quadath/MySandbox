@@ -1,24 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class HitPoints : MonoBehaviour
 {
-    public float hp = 100;
+    public float maxHp;
+    private float hp;
 
     public void Damage(float value)
     {
         hp -= value;
         if (hp <= 0)
         {
-            FindObjectOfType<Grid2D>().DestroyBlock(transform.position);
             Destroy(gameObject);
         }
-    }
-
-    public void OnMouseDown()
-    {
-        Damage(40);
     }
 }

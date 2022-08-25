@@ -8,10 +8,12 @@ public class PlaceBlock : MonoBehaviour
     public GameObject tile;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             var vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            grid.SetBlock(new Vector3Int((int) (vect.x + .5f), (int) (vect.y + .5f), 0), tile);
+            var vectInt = new Vector3Int((int) (vect.x + .5f), (int) (vect.y + .5f), 0);
+            Instantiate(tile, vectInt, Quaternion.identity);
+            // grid.SetBlock(new Vector3Int((int) (vect.x + .5f), (int) (vect.y + .5f), 0), tile);
         }
     }
 }

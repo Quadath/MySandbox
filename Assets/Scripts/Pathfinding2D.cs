@@ -8,7 +8,6 @@ public class Pathfinding2D : MonoBehaviour
     public Transform seeker, target;
     Grid2D grid;
     private Node2D seekerNode, targetNode;
-    public GameObject GridOwner;
     public List<Node2D> path;
 
 
@@ -16,7 +15,7 @@ public class Pathfinding2D : MonoBehaviour
     void Awake()
     {
         //Instantiate grid
-        grid = GridOwner.GetComponent<Grid2D>();
+        grid = FindObjectOfType<Grid2D>();
     }
 
 
