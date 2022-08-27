@@ -9,8 +9,9 @@ public class Turret : MonoBehaviour
     private Transform shoot;
     private Transform target;
 
-    private float rotSpeed = 1;
-    private float shootSpeed = 0.7f;
+    public float radius = 4;
+    public float rotSpeed = 1;
+    public float shootSpeed = 0.7f;
 
     private float shootCooldown = 0;
 

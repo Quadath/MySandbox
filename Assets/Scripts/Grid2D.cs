@@ -47,7 +47,7 @@ public class Grid2D : MonoBehaviour
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) +
                                      Vector3.up * (y * nodeDiameter + nodeRadius);
-                Grid[x, y] = new Node2D(false, worldPoint, x, y);
+                Grid[x, y] = new Node2D(false, worldPoint, x, y, tiles[x, y] ? tiles[x, y].GetComponent<HitPoints>() : null);
 
                 if (HasTile(WorldToCell(Grid[x, y].worldPosition)))
                     Grid[x, y].SetObstacle(true);
@@ -80,7 +80,7 @@ public class Grid2D : MonoBehaviour
             neighbors.Add(Grid[node.GridX - 1, node.GridY]);
 
 
-         /* Uncomment this code to enable diagonal movement
+          // Uncomment this code to enable diagonal movement
          
          //checks and adds top right neighbor
          if (node.GridX + 1 >= 0 && node.GridX + 1< gridSizeX && node.GridY + 1 >= 0 && node.GridY + 1 < gridSizeY)
@@ -97,7 +97,6 @@ public class Grid2D : MonoBehaviour
          //checks and adds bottom left neighbor
          if (node.GridX - 1 >= 0 && node.GridX - 1 < gridSizeX && node.GridY  - 1>= 0 && node.GridY  - 1 < gridSizeY)
              neighbors.Add(Grid[node.GridX - 1, node.GridY - 1]);
-         */
 
 
         return neighbors;

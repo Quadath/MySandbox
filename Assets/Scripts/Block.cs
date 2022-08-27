@@ -3,22 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class Block : MonoBehaviour
 {
-    public float hp = 100;
-
-    public void Damage(float value)
+    private HitPoints hp;
+    void Start()
     {
-        hp -= value;
-        if (hp <= 0)
+        hp = GetComponent<HitPoints>();
+        
+        hp.onDeath = (() =>
         {
             FindObjectOfType<Grid2D>().DestroyBlock(transform.position);
-            Destroy(gameObject);
-        }
+        });
     }
 
     public void OnMouseDown()
     {
-        Damage(40);
+        hp.Damage(10);
     }
 }

@@ -7,12 +7,13 @@ public class TurretTrigger : MonoBehaviour
 {
     private Turret turr;
     private List<Transform> enemies = new List<Transform>();
-    private float range = 3;
+    private float radius => turr.radius;
     public Transform tower;
 
     private void Start()
     {
         turr = transform.parent.GetComponent<Turret>();
+        GetComponent<CircleCollider2D>().radius = radius;
     }
 
     private void Update()
@@ -37,7 +38,7 @@ public class TurretTrigger : MonoBehaviour
                 if(hit.transform != enemy)
                     continue;
 
-                if (dist > (range + .25f))
+                if (dist > (radius + .25f))
                 {
                     enemies.Remove(enemy);
                 }
@@ -56,7 +57,7 @@ public class TurretTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.transform.CompareTag("Enemy"))
             if (!enemies.Contains(other.transform))
